@@ -1,0 +1,5 @@
+crontab -e
+
+0 0 * * * find /path/to/yedek_dizini -type f -mtime +6 -delete
+
+6 gün sonrasındaki dosyaları sil
