@@ -1,0 +1,35 @@
+ID: İşlem veya sanal makinenin benzersiz kimlik numarasını (ID) temsil eder. Bu, işlem veya sanal makineyi ayırt etmek için kullanılır. Her ID yalnızca o anki çalışan işlem veya sanal makine için benzersiz olmalıdır. Bir işlem veya sanal makine sona erdiğinde veya sonlandırıldığında bu ID'ler yeniden kullanılabilir.
+GID: Bu sütun işlem veya sanal makineleri gruplamak için kullanılabilir. Ancak genellikle her bir işlem veya sanal makine farklı bir GID'ye sahiptir, bu nedenle genellikle kullanılmaz.
+NAME: İşlem veya sanal makinenin adını veya tanımını içerir. Bu sütun, işlemleri veya sanal makineleri insanlar için daha anlaşılır hale getirmek için kullanışlıdır.
+NWLD: "NWLD" sütunu, bir işlem veya sanal makinenin başlatılan iş parçacığı (thread) sayısını gösterir. Bu değer, işlemcinin kaç iş parçacığını eş zamanlı olarak çalıştırabileceğini belirler. Bu sayı, işlemcinin fiziksel çekirdek sayısı veya sanal CPU sayısı ile sınırlıdır.
+%USED: "%USED" sütunu, işlemcinin kullanım yüzdesini gösterir. Bu değer, işlemcinin ne kadar süreyle işlem yaptığını ifade eder. İdeal olarak, bu değer %100'e yakın olmalıdır, çünkü işlemci sürekli olarak kullanılır.
+%RUN: "%RUN" sütunu, işlemcinin işletilen iş parçacığı (thread) sayısının yüzdesini gösterir. İdeal olarak, bu değer %100'e yakın olmalıdır, çünkü işlemci mümkün olduğunca işlem yapmalıdır.
+%SYS: "%SYS" sütunu, işlemcinin sistem (kernel) işlemleri tarafından kullanım yüzdesini gösterir. Bu değer, işletim sistemi işlemlerinin işlemciyi ne kadar kullandığını ifade eder. Bu değer yüksekse, sistem işlemleri işlemciyi çok kullanıyor olabilir.
+%WAIT: "%WAIT" sütunu, işlemci üzerinde beklemekte olan iş parçacıklarının yüzdesini gösterir. Bu iş parçacıkları genellikle giriş/çıkış (I/O) işlemlerini beklerken bulunur.
+%VMWAIT: "%VMWAIT" sütunu, sanal makine tarafından bekletilen iş parçacıklarının yüzdesini gösterir. Bu, sanal makinelerin kaynaklarını bekleyen iş parçacıklarının ne kadar olduğunu gösterir. Bu değer düşük olmalıdır, çünkü bekleyen iş parçacıkları sanal makinelerin performansını etkileyebilir.
+%RDY: "%RDY" sütunu, sanal makineye erişmeye hazır bekleyen iş parçacıklarının yüzdesini gösterir. Bu, sanal makinelerin işlemciye erişim için ne kadar beklediğini ifade eder. İdeal olarak, bu değer düşük olmalı ve sanal makinelerin işlemciye hızlıca erişmesi gerekmektedir.
+%IDLE: "%IDLE" sütunu, işlemcinin boşta geçirdiği yüzdeyi gösterir. İdeal olarak, bu değer düşük olmalıdır çünkü işlemci sürekli olarak işlem yapmalıdır.
+%OVRLP: "%OVRLP" sütunu, işlemci üzerindeki örtüşmeyi (overlap) gösterir. Bu, işlemci üzerinde aynı anda çalışan iş parçacıklarının ne kadarının birbirleriyle çakıştığını gösterir. İdeal olarak, bu değer düşük olmalıdır.
+%CSTP: "%CSTP" sütunu, sanal makinede durdurulmuş işlemci zamanının yüzdesini gösterir. Bu, sanal makinenin bekletildiği veya durdurulduğu sürenin yüzdesini ifade eder. İdeal olarak, bu değer düşük olmalıdır, çünkü sanal makinelerin işlemci zamanından yararlanması gerekmektedir.
+%MLMTD: "%MLMTD" sütunu, işlemcinin kullanımının sınırlı olduğu durumların yüzdesini gösterir. Bu, işlemcinin kaynak sınırlamaları veya sınırlamaları nedeniyle ne kadar süreyle sınırlı kaldığını ifade eder. İdeal olarak, bu değer düşük olmalıdır, çünkü işlemcinin mümkün olduğunca kaynaklardan yararlanması gerekmektedir.
+%SWPWT: "%SWPWT" sütunu, işlemciye swap işlemi yapılmasını bekleyen iş parçacıklarının yüzdesini gösterir. Bu iş parçacıkları, bellekteki verilere erişmek için disk üzerindeki verilerin beklediği durumları temsil eder. Bu değer düşük olmalıdır, çünkü swap işlemleri işlemci performansını olumsuz etkileyebilir.
+
+
+
+C: CPU kullanımına göre sıralama yapar. Bu, en fazla CPU kullanımına sahip sanal makineleri veya işlemleri en üstte gösterir.
+M: Bellek kullanımına göre sıralama yapar. Bu, en fazla bellek kullanan sanal makineleri veya işlemleri en üstte gösterir.
+D: Disk kullanımına göre sıralama yapar. Bu, disk E/S işlemlerine en fazla sahip olanları en üstte gösterir.
+N: Ağ kullanımına göre sıralama yapar. Bu, ağ trafiği yüküne en fazla sahip olanları en üstte gösterir.
+V: Sanal makine (VM) görünümüne geçiş yapar. Bu, ESXi host üzerinde çalışan sanal makinelerin ayrıntılarını görüntüler.
+K: Kilitleme (lock) istatistiklerini görüntüler.
+S: Depolama (storage) kullanımı ve istatistiklerini görüntüler.
+U: "Worlds" (iş parçacıkları) görünümüne geçiş yapar.
+P: "Power Management" (güç yönetimi) görünümüne geçiş yapar.
+O: Sütunları özelleştirme modunu açar. Bu modda, sütunları isteğinize göre özelleştirebilirsiniz.
+F: Sanal makineleri filtrelemek için kullanılır.
+H: Yardım menüsünü görüntüler.
+
+
+cpu kullanımına göre sıralam yapıcaksak 
+c tuşuna bas sonra    cpu kullanımına göre sırala demek.
+büyük V bas .  sadece vmleri göster demek 
