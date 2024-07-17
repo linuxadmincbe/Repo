@@ -1,8 +1,10 @@
-fiziksel makinanın seri no öğrenme
+####fiziksel makinanın seri no öğrenme
 
 sudo lshw -c system | grep serial
 
 sudo dmidecode -s system-serial-number
 
-cpu view
+ # cpu view
 dmidecode -t 1
+# memory view
+dmidecode -t 2
