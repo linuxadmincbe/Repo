@@ -1,0 +1,1 @@
+find . -type d -name "kurumdan_bankaya" -exec mkdir {}/arsiv \;
