@@ -1,0 +1,5 @@
+fiziksel makinanın seri no öğrenme
+
+sudo lshw -c system | grep serial
+
+sudo dmidecode -s system-serial-number
