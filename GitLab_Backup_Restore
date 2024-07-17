@@ -1,0 +1,39 @@
+### dockerda çalışan gitlab yedeğini alır uzaktaki gitlab sunucusuna restore eder.
+# GitLab Container ID veya Name
+CONTAINER_ID_OR_NAME="3a84426ee4ca"
+
+# Yedekleme Dosyasının Hedef Yolu (Sunucunun Localinde)
+LOCAL_BACKUP_DIR="/docker/gitlab/yedek/"
+
+# GitLab Yedekleme Komutu ▒~Galı▒~_tırma Fonksiyonu ve Dosya Adını De▒~_i▒~_kene Atama
+function backup_gitlab() {
+    # Yedekleme komutunu çalı▒~_tır ve çıktıyı "backup_file" de▒~_i▒~_kenine at
+    backup_file=$(docker exec $CONTAINER_ID_OR_NAME gitlab-backup create | awk '/Creating backup / {print $4}')
+}
+
+# Yedekleme Dosyasını Docker Konteynerinden Sunucunun Lokaline Kopyalama Fonksiyonu
+function copy_backup_to_local() {
+    docker cp $CONTAINER_ID_OR_NAME:/var/opt/gitlab/backups/$backup_file $LOCAL_BACKUP_DIR
+}
+
+# Uzak Sunucuya Kopyalama Fonksiyonu
+function copy_backup_to_remote_server() {
+    REMOTE_SERVER="10.237.80.66"
+    REMOTE_USERNAME="lnx_ansible"
+    REMOTE_BACKUP_DIR="/home/lnx_ansible/gityedek/"
+
+    # Uzak sunucuya dosyayı kopyala
+    scp $LOCAL_BACKUP_DIR$backup_file $REMOTE_USERNAME@$REMOTE_SERVER:$REMOTE_BACKUP_DIR
+    if [[ $? -eq 0 ]]; then
+        echo "Yedek dosyası ba▒~_arıyla uzak sunucuya kopyalandı."
+      # yerel dizindeki dosyalar silindi.
+        rm -f $LOCAL_BACKUP_DIR$backup_file
+    else
+        echo "Yedek dosyası uzak sunucuya kopyalanırken bir hata olu▒~_tu."
+    fi
+}
+
+# Yedekleri Olu▒~_turma ve Kopyalama İ▒~_lemi
+backup_gitlab
+copy_backup_to_local
+copy_backup_to_remote_server
