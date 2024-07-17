@@ -1,0 +1,57 @@
+pvcreate /dev/sdb;mkdir /elk;vgextend rhel /dev/sdb;lvcreate -n elk -l 100%FREE rhel;mkfs.ext4 /dev/mapper/ubuntu--vg-elk;lvextend -r -l +100%free /dev/mapper/ubuntu--vg-elk
+
+ pvcreate /dev/sdc;vgextend ubuntu-vg /dev/sdc;lvextend -r -l +100%free /dev/mapper/ubuntu--vg-ELK
+
+ lvcreate --name ELKMON -l 100%free ubuntu-vg
+
+mkdir /dynatrace_backup3; chown dynatrace:dynatrace /dynatrace_backup3; chmod 777 /dynatrace_backup3;echo "172.21.88.19:/mnt/dynatrace_backup3  /dynatrace_backup3  nfs    noac,lookupcache=none   0       0" | sudo tee -a /etc/fstab;mount -a 
+
+
+
+yeni bir lv  ekleme
+lsblk ile yeni eklenen diski görmen lazım.
+
+1
+pvcreate /dev/sdb
+2
+ vgextend vg_elk /dev/sdb
+3
+lvcreate --name ELK_COLD -l 100%free rhel
+4
+mkfs.ext4 /dev/mapper/ubuntu--vg-ELKMON
+5
+ lvextend  -l +100%free /dev/mapper/ubuntu--vg-ELKMON
+6
+mount /dev/rhel/ELK_COLD ELK_COLD
+7
+
+
+
+DİZİN YARAT
+mkdir ELK_COLD
+chmod 777 ELK_COLD
+MAP ET
+
+df -h
+lvextend -l +100%free /dev/rhel/ELK_COLD
+sonra açılışta map olması için
+vi /etc/fstab
+/dev/mapper/rhel-ELK_COLD /ELK_COLD   ext4 defaults 0 0
+şekilde kaydet
+
+Disk genişletme 
+  df -h
+  575  lsblk   === eklediğin disk sdc olarak görünüyor
+  576  pvcreate /dev/sdc      dizin yarat bu isimde
+  577  pvdisplay   / sonra kontrol et   "vg_elk"   vg name bul
+  578  vgextend vg_elk /dev/sdc  
+  580  df -khT
+ lvextend  -l +100%free /dev/mapper/vg_elk-lv_elk01
+Veya aşağıdaki -r eklersen xfs grovs yapmazsın.
+  582  lvextend -r -l +100%free /dev/mapper/vg_elk-lv_elk01
+  583  xfs_growfs /dev/mapper/vg_elk-lv_elk01     eğer dosya sistemi ext4 ise
+               resize2fs /dev/mapper/vg_elk-lv_elk01    olarak yaz.
+
+  584  df -h
+
+ df -Th   dosya formatını görürsün xfs veya ext4,ext3 gibi.
