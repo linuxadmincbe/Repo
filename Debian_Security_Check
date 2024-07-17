@@ -1,0 +1,10 @@
+# ubuntu sunucularda Security patch veya patch kontrlü yapmak için aşağidaki paketi kurmanız gerekiyor.
+
+apt-get install update-notifier-common   
+
+  # Security update kontrol code.
+ /usr/lib/update-notifier/apt-check 2>&1 | cut -d ';' -f 2
+
+  # Security Update code
+sudo apt update -y && sudo unattended-upgrade -d
+
