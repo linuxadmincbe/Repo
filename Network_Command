@@ -1,0 +1,3 @@
+sudo netstat -tuln | grep :21
+sudo ss -tuln | grep :21
+sudo lsof -i :21
