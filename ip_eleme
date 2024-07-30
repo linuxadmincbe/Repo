@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Dosyaların adları
+file2="inv.yml"
+file3="invyeni.yml"
+
+# Geçici dosya adı
+temp_file=$(mktemp)
+
+# IP adreslerini toplamak için bir dizi oluşturuyoruz
+declare -a ip_array
+
+# Her bir YAML dosyasını okuyup IP adreslerini topluyoruz
+for file in "$file2" "$file3"; do
+    # YAML dosyasını geçici bir metin dosyasına çıktı olarak yazıyoruz
+    grep -Eo '[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+' "$file" >> "$temp_file"
+done
+
+# Geçici dosyadan benzersiz IP'leri alıyoruz
+sort -u "$temp_file" > "unique_ip_list.txt"
+
+# Geçici dosyayı temizleme
+rm "$temp_file"
+
+echo "Benzersiz IP adresleri unique_ip_list.txt dosyasına yazıldı."
