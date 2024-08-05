@@ -2,3 +2,14 @@ sudo netstat -tuln | grep :21
 sudo ss -tuln | grep :21
 sudo lsof -i :21
 netstat -tulpn|grep zabbix 
+
+## Network de port yayını yapıp test etmek 
+nc -lvu  5060
+Nc -lvu 5060
+### port yayını yapmak listen 
+ncat - l 0.0 0.0:port 
+heart 1
+
+
+Udp port kontrolü 
+nc -z -v -u 10.0.6.21 123
