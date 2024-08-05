@@ -7,6 +7,9 @@ pvcreate /dev/sdb;mkdir /elk;vgextend rhel /dev/sdb;lvcreate -n elk -l 100%FREE 
 mkdir /dynatrace_backup3; chown dynatrace:dynatrace /dynatrace_backup3; chmod 777 /dynatrace_backup3;echo "172.21.88.19:/mnt/dynatrace_backup3  /dynatrace_backup3  nfs    noac,lookupcache=none   0       0" | sudo tee -a /etc/fstab;mount -a 
 
 
+### dosya boyutlarını görürsün sıralama yaparsın.
+du -sh * | sort -hr
+
 
 yeni bir lv  ekleme
 lsblk ile yeni eklenen diski görmen lazım.
