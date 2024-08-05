@@ -2,3 +2,8 @@
 systemctl list-unit-files | grep sshd
 
 systemctl list-unit-files --type=service
+
+## çalışan servisleri görmek için
+systemctl | grep running 
+## çalışan servisler içinde istediğin servisi görmek için
+systemctl | grep running | grep falcon
