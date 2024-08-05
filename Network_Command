@@ -8,8 +8,8 @@ nc -lvu  5060
 Nc -lvu 5060
 ### port yayını yapmak listen 
 ncat - l 0.0 0.0:port 
-heart 1
-
+netcat -l 443 veya 
+Ncat -l 0.0.0.0 443
 
 ###Udp port kontrolü 
 nc -z -v -u 10.0.6.21 123
