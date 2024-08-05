@@ -1,0 +1,2 @@
+servis kontrolü
+systemctl list-unit-files | grep sshd
