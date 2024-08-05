@@ -1,0 +1,2 @@
+### vi veya nano gibi editörünüz yok ise echo komutuyla dosyaya yazabilirsiniz. 
+echo /dev/mapper/rhel-data  /data                    xfs     defaults        0 0 >> /etc/fstab
