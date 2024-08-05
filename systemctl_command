@@ -1,4 +1,4 @@
-###servis kontrolü
+### servis kontrolü
 systemctl list-unit-files | grep sshd
 
 systemctl list-unit-files --type=service
@@ -7,3 +7,6 @@ systemctl list-unit-files --type=service
 systemctl | grep running 
 ## çalışan servisler içinde istediğin servisi görmek için
 systemctl | grep running | grep falcon
+
+## Aktif servisler
+systemctl list-unit-files | grep enabled
