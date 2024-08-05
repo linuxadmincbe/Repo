@@ -20,3 +20,7 @@ cat dosya.txt | pv -b | nc -l -p 3333
 
 ## dosyayı çekmek istediğiniz sistemde,
 nc 192.168.1.5 3333 > /tmp/dosya.txt
+
+
+## TCP DUMP kullanımı
+Tcpdump -i any -A dst port 22
