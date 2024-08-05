@@ -1,2 +1,4 @@
-servis kontrolü
+###servis kontrolü
 systemctl list-unit-files | grep sshd
+
+systemctl list-unit-files --type=service
