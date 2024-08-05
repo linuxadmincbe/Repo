@@ -6,3 +6,6 @@ find / -type f -name "*.crt" -o -name "*.pem"
 # yml dosyalarını bulur
 Find /home/ -name "*.yml" | wc -l    
 Find /home/ -name "*.yml"    
+
+##son 10 gün logunu tutar geri kalanları siler.
+find ./my_dir -mtime +10 -type f -delete
