@@ -2,3 +2,7 @@
 find . -type d -name "kurumdan_bankaya" -exec mkdir {}/arsiv \;
 
 find / -type f -name "*.crt" -o -name "*.pem"
+
+# yml dosyalarını bulur
+Find /home/ -name "*.yml" | wc -l    
+Find /home/ -name "*.yml"    
