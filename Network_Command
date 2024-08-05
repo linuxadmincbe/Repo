@@ -11,5 +11,12 @@ ncat - l 0.0 0.0:port
 heart 1
 
 
-Udp port kontrolü 
+###Udp port kontrolü 
 nc -z -v -u 10.0.6.21 123
+
+##böylece 3333 no'lu porttan dosyayı indirilmesi için hazırladık.
+
+cat dosya.txt | pv -b | nc -l -p 3333
+
+## dosyayı çekmek istediğiniz sistemde,
+nc 192.168.1.5 3333 > /tmp/dosya.txt
