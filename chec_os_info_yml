@@ -1,0 +1,26 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: Create result file
+    lineinfile:
+      line: "hostname,default_ipv4,domain,distribution,distribution_major_version"
+      dest: /tmp/vm-control_{{ lookup('pipe', 'date +%Y%m%d') }}.csv
+      create: yes
+  - debug: msg="{{ansible_default_ipv4.address}}"
+  - name: Record the result
+    lineinfile:
+      line: "{{ansible_hostname}},{{ansible_default_ipv4.address}},{{ansible_domain}},{{ansible_distribution}},{{ansible_distribution_major_version}}"
+      dest: /tmp/vm-control_{{ lookup('pipe', 'date +%Y%m%d') }}.csv
+    delegate_to: 127.0.0.1
+- hosts: localhost
+  tasks:
+  - name: Sending mail
+    mail:
+      host: 10.125.126.200
+      from: Linux team<sender@gmail.com>
+      port: 25
+      to: receiver@gmail.com
+      subject: Linux VM İnfo List
+      body: Security patch status and agents info on linux machines is above.
+      attach: /tmp/vm-control_{{ lookup('pipe', 'date +%Y%m%d') }}.csv
+    delegate_to: localhost
