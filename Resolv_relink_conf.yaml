@@ -1,0 +1,17 @@
+---
+- name: Update resolv.conf symbolic link for Ubuntu 20.04 and 22.04
+  hosts: all
+  become: true
+  tasks:
+    - name: Remove existing /etc/resolv.conf
+      file:
+        path: /etc/resolv.conf
+        state: absent
+      when: ansible_distribution == "Ubuntu" and (ansible_distribution_version == "20.04" or ansible_distribution_version == "22.04")
+
+    - name: Create symbolic link for /etc/resolv.conf
+      file:
+        src: /run/systemd/resolve/resolv.conf
+        dest: /etc/resolv.conf
+        state: link
+      when: ansible_distribution == "Ubuntu" and (ansible_distribution_version == "20.04" or ansible_distribution_version == "22.04")
