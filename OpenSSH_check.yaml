@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  tasks:
+    - debug: msg="{{ansible_default_ipv4.address}}"
+    - name: Check OpenSSH Version
+      shell: ssh -V 2>&1 | awk '{print $1}'
+      register: ssh_version_output
+    - name: Display OpenSSH Version
+      debug: msg=" {{ ssh_version_output.stdout }} - {{ansible_default_ipv4.address}}"
