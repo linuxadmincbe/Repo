@@ -1,0 +1,95 @@
+- name: NTP config
+  hosts: all
+  become: yes
+  vars:
+    ntp_servers:
+      - ntp01.itservices.local
+      - ntp02.itservices.local
+  tasks:
+    - name: ntp services check
+      shell: systemctl status ntp || systemctl status ntpd
+      register: ntpresult
+      failed_when: ntpresult.rc == 100000
+
+    - name: chrony services check
+      shell: systemctl status chronyd
+      register: chronyresult
+      failed_when: chronyresult.rc == 100000
+
+    - name: Remove contents of chrony.conf if NTP service is running
+      file:
+        path: /etc/chrony/chrony.conf
+        state: absent
+      when:
+        - chronyresult.rc == 0
+        - ansible_distribution == 'Ubuntu'
+
+    - name: Remove contents of chrony.conf if NTP service is running
+      file:
+        path: /etc/chrony.conf
+        state: absent
+      when:
+        - chronyresult.rc == 0
+        - ansible_distribution == 'RedHat'
+
+    - name: Remove contents of ntp.conf if Chrony service is running
+      file:
+        path: /etc/ntp.conf
+        state: absent
+      when:
+        - ntpresult.rc == 0
+        - ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu'
+
+    - name: Ensure /etc/ntp.conf exists if NTP service is running
+      file:
+        path: /etc/ntp.conf
+        state: touch
+      when:
+        - ntpresult.rc == 0
+        - ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu'
+
+    - name: Ensure /etc/chrony.conf exists if NTP service is running
+      file:
+        path: /etc/chrony.conf
+        state: touch
+      when:
+        - chronyresult.rc == 0
+        - ansible_distribution == 'RedHat'
+
+    - name: Ensure /etc/chrony/chrony.conf exists if Chrony service is running
+      file:
+        path: /etc/chrony/chrony.conf
+        state: touch
+      when:
+        - chronyresult.rc == 0
+        - ansible_distribution == 'Ubuntu'
+
+    - name: Configure RedHat Chrony with specified NTP servers
+      ansible.builtin.lineinfile:
+        path: /etc/chrony.conf
+        line: "server {{ item }} iburst"
+        create: yes
+      loop: "{{ ntp_servers }}"
+      when:
+        - chronyresult.rc == 0
+        - ansible_distribution == 'RedHat'
+
+    - name: Configure Ubuntu Chrony with specified NTP servers
+      ansible.builtin.lineinfile:
+        path: /etc/chrony/chrony.conf
+        line: "server {{ item }} iburst"
+        create: yes
+      loop: "{{ ntp_servers }}"
+      when:
+        - chronyresult.rc == 0
+        - ansible_distribution == 'Ubuntu'
+
+    - name: Configure NTP with specified servers for RedHat or Ubuntu
+      ansible.builtin.lineinfile:
+        path: /etc/ntp.conf
+        line: "server {{ item }} iburst"
+        create: yes
+      loop: "{{ ntp_servers }}"
+      when:
+        - ntpresult.rc == 0
+        - ansible_distribution == 'RedHat' or ansible_distribution == 'Ubuntu'
